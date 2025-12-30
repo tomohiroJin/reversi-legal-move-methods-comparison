@@ -113,3 +113,26 @@ class GameRules:
                 return True
 
         return False
+
+    def find_all_legal_moves(self, player: str) -> List[Tuple[int, int]]:
+        """
+        指定プレイヤーの全合法手を列挙する
+
+        盤面上のすべてのマスをチェックし、
+        合法手となる位置のリストを返す。
+
+        Args:
+            player: 手番（'B' または 'W'）
+
+        Returns:
+            合法手の位置のリスト [(row, col), ...]
+        """
+        合法手リスト: List[Tuple[int, int]] = []
+
+        # 盤面のすべてのマスをチェック
+        for row in range(Board.SIZE):
+            for col in range(Board.SIZE):
+                if self.is_legal_move(row, col, player):
+                    合法手リスト.append((row, col))
+
+        return 合法手リスト
