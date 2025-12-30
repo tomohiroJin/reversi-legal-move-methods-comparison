@@ -86,3 +86,30 @@ class GameRules:
 
         # 盤面外に出た
         return False
+
+    def is_legal_move(self, row: int, col: int, player: str) -> bool:
+        """
+        指定位置が合法手かどうかを判定する
+
+        合法手の条件:
+        1. そのマスが空である
+        2. 8方向のうち少なくとも1方向でコマをひっくり返せる
+
+        Args:
+            row: 行（0-7）
+            col: 列（0-7）
+            player: 手番（'B' または 'W'）
+
+        Returns:
+            合法手なら True、それ以外 False
+        """
+        # そのマスが空でなければダメ
+        if not self._board.is_empty(row, col):
+            return False
+
+        # 8方向のうち、少なくとも1方向でひっくり返せればOK
+        for dr, dc in self.DIRECTIONS:
+            if self.can_flip_in_direction(row, col, dr, dc, player):
+                return True
+
+        return False
