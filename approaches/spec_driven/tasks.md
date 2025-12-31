@@ -367,7 +367,7 @@ refactor(task-1-7): find_legal_moves をリファクタリング（Refactor）
 - [x] tasks.md が更新されている
 - [x] Git コミット済み
 
-**状態**: ⏳ 未着手
+**状態**: ✅ 完了
 
 **コミットメッセージ例**:
 ```

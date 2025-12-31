@@ -210,3 +210,83 @@ def test_合法手がない場合は空リストを返す():
 
     legal_moves = find_legal_moves(grid, 'W')
     assert legal_moves == []
+
+
+# === 内側のループ1-C: 入出力処理（TDD）===
+
+def test_標準入力から盤面と手番を読み込める():
+    """9行の入力を盤面データと手番に変換"""
+    from reversi import read_input
+
+    # 標準入力をシミュレート
+    input_data = """........
+........
+........
+...BW...
+...WB...
+........
+........
+........
+B"""
+
+    sys.stdin = StringIO(input_data)
+
+    grid, player = read_input()
+
+    # 標準入力を元に戻す
+    sys.stdin = sys.__stdin__
+
+    # 盤面データの検証
+    assert len(grid) == 8
+    assert len(grid[0]) == 8
+    assert grid[3][3] == 'B'
+    assert grid[3][4] == 'W'
+    assert grid[4][3] == 'W'
+    assert grid[4][4] == 'B'
+
+    # 手番の検証
+    assert player == 'B'
+
+
+def test_合法手をマークした盤面を出力できる():
+    """合法手に'0'をマークして出力"""
+    from reversi import write_output
+
+    # 初期配置の盤面
+    grid = [
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', 'B', 'W', '.', '.', '.'],
+        ['.', '.', '.', 'W', 'B', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.']
+    ]
+
+    legal_moves = [(2, 4), (3, 5), (4, 2), (5, 3)]
+    player = 'B'
+
+    # 標準出力をキャプチャ
+    captured_output = StringIO()
+    sys.stdout = captured_output
+
+    write_output(grid, legal_moves, player)
+
+    # 標準出力を元に戻す
+    sys.stdout = sys.__stdout__
+
+    # 出力内容を検証
+    output = captured_output.getvalue()
+    expected = """........
+........
+....0...
+...BW0..
+..0WB...
+...0....
+........
+........
+B
+"""
+
+    assert output == expected
