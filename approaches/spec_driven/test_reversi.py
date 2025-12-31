@@ -168,6 +168,56 @@ W
     assert actual_output == expected_output, f"Expected:\n{expected_output}\nActual:\n{actual_output}"
 
 
+# === 外側のループ4: AC-004, AC-005（エッジケース）===
+
+def test_複数方向にひっくり返せる場合も正しく判定する():
+    """AC-004: 1つの手で複数方向にひっくり返せる場合"""
+    from reversi_core import can_place_and_flip
+
+    # 角に置く場合、複数方向にひっくり返せる盤面
+    # (0, 0) に黒を置くと、右、下、右下の3方向にひっくり返せる
+    grid = [
+        ['.', 'W', 'B', '.', '.', '.', '.', '.'],  # 右方向: . W B（OK）
+        ['W', 'W', 'B', '.', '.', '.', '.', '.'],  # 右下方向: . W B（OK）
+        ['B', '.', '.', '.', '.', '.', '.', '.'],  # 下方向: . W B（OK）
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.']
+    ]
+
+    # (0, 0) に黒を置くと、右、下、右下の3方向にひっくり返せる
+    assert can_place_and_flip(grid, 0, 0, 'B') == True
+
+
+def test_端や角での合法手判定がエラーなく動作する():
+    """AC-005: 盤面の端や角でも正しく判定"""
+    from reversi_core import can_place_and_flip
+
+    # 初期配置の盤面
+    grid = [
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', 'B', 'W', '.', '.', '.'],
+        ['.', '.', '.', 'W', 'B', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.']
+    ]
+
+    # 角や端でエラーなく判定できる
+    assert can_place_and_flip(grid, 0, 0, 'B') == False  # 左上角
+    assert can_place_and_flip(grid, 0, 7, 'B') == False  # 右上角
+    assert can_place_and_flip(grid, 7, 0, 'B') == False  # 左下角
+    assert can_place_and_flip(grid, 7, 7, 'B') == False  # 右下角
+    assert can_place_and_flip(grid, 0, 3, 'B') == False  # 上端
+    assert can_place_and_flip(grid, 7, 3, 'B') == False  # 下端
+    assert can_place_and_flip(grid, 3, 0, 'B') == False  # 左端
+    assert can_place_and_flip(grid, 3, 7, 'B') == False  # 右端
+
+
 # === 内側のループ1-A: can_place_and_flip 関数（TDD）===
 
 def test_空マスで相手のコマを挟める場合は合法手と判定する():
