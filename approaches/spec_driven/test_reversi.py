@@ -60,6 +60,60 @@ B
     assert actual_output == expected_output, f"Expected:\n{expected_output}\nActual:\n{actual_output}"
 
 
+# === 外側のループ2: AC-002（初期配置・白番の合法手判定）===
+
+def test_初期配置で白番の合法手を正しく表示する():
+    """
+    Given: 盤面が初期配置である
+    And: 手番が白（W）である
+    When: プログラムを実行する
+    Then: 4箇所の合法手が '0' でマークされる
+    """
+    # 入力データ（初期配置・白番）
+    input_data = """........
+........
+........
+...BW...
+...WB...
+........
+........
+........
+W"""
+
+    # 期待される出力
+    expected_output = """........
+........
+...0....
+..0BW...
+...WB0..
+....0...
+........
+........
+W
+"""
+
+    # 標準入力を置き換え
+    sys.stdin = StringIO(input_data)
+
+    # 標準出力をキャプチャ
+    captured_output = StringIO()
+    sys.stdout = captured_output
+
+    # プログラムを実行
+    from reversi import main
+    main()
+
+    # 出力を取得
+    actual_output = captured_output.getvalue()
+
+    # 標準入出力を元に戻す
+    sys.stdin = sys.__stdin__
+    sys.stdout = sys.__stdout__
+
+    # 検証
+    assert actual_output == expected_output, f"Expected:\n{expected_output}\nActual:\n{actual_output}"
+
+
 # === 内側のループ1-A: can_place_and_flip 関数（TDD）===
 
 def test_空マスで相手のコマを挟める場合は合法手と判定する():
