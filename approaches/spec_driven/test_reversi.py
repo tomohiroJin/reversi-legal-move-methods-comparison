@@ -114,6 +114,60 @@ W
     assert actual_output == expected_output, f"Expected:\n{expected_output}\nActual:\n{actual_output}"
 
 
+# === 外側のループ3: AC-003（合法手がない場合）===
+
+def test_合法手がない場合は0をマークしない():
+    """
+    Given: 盤面上にどこに置いても相手のコマがひっくり返らない状態
+    When: プログラムを実行する
+    Then: 出力された盤面に '0' のマークがない
+    """
+    # 入力データ（すべて黒で埋まっている盤面・白番）
+    input_data = """BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+W"""
+
+    # 期待される出力（'0' がない）
+    expected_output = """BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+BBBBBBBB
+W
+"""
+
+    # 標準入力を置き換え
+    sys.stdin = StringIO(input_data)
+
+    # 標準出力をキャプチャ
+    captured_output = StringIO()
+    sys.stdout = captured_output
+
+    # プログラムを実行
+    from reversi import main
+    main()
+
+    # 出力を取得
+    actual_output = captured_output.getvalue()
+
+    # 標準入出力を元に戻す
+    sys.stdin = sys.__stdin__
+    sys.stdout = sys.__stdout__
+
+    # 検証（'0' がないことを確認）
+    assert '0' not in actual_output
+    assert actual_output == expected_output, f"Expected:\n{expected_output}\nActual:\n{actual_output}"
+
+
 # === 内側のループ1-A: can_place_and_flip 関数（TDD）===
 
 def test_空マスで相手のコマを挟める場合は合法手と判定する():
