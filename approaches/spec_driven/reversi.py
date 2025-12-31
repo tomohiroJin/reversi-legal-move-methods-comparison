@@ -45,3 +45,21 @@ def write_output(grid: List[List[str]], legal_moves: List[Tuple[int, int]], play
     for row in output_grid:
         print(''.join(row))
     print(player)
+
+
+def main():
+    """
+    メイン処理：標準入力から盤面を読み込み、合法手を見つけて出力する。
+    """
+    # 1. 入力読み込み
+    grid, player = read_input()
+
+    # 2. 合法手を見つける
+    legal_moves = find_legal_moves(grid, player)
+
+    # 3. 結果を出力
+    write_output(grid, legal_moves, player)
+
+
+if __name__ == "__main__":
+    main()
