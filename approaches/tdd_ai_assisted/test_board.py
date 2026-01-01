@@ -5,7 +5,8 @@
 # pylint: disable=non-ascii-name,invalid-name
 
 import pytest
-from board import Board, Stone, LegalMoveCalculator
+from board import Board, Stone
+from legal_move_calculator import LegalMoveCalculator
 
 
 class TestBoardCreation:
