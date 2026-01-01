@@ -76,13 +76,16 @@ class Board:
         Returns:
             合法手の場合True
         """
-        # 左方向 (-1, 0)
-        if self._check_direction(board, x, y, -1, 0, my_stone, opponent_stone):
-            return True
+        # チェックする方向のリスト
+        directions = [
+            (-1, 0),   # 左
+            (0, -1),   # 上
+            (-1, -1),  # 左上
+        ]
 
-        # 上方向 (0, -1)
-        if self._check_direction(board, x, y, 0, -1, my_stone, opponent_stone):
-            return True
+        for dx, dy in directions:
+            if self._check_direction(board, x, y, dx, dy, my_stone, opponent_stone):
+                return True
 
         return False
 
