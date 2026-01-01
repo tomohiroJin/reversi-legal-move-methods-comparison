@@ -76,23 +76,69 @@ class Board:
         Returns:
             合法手の場合True
         """
-        # 左方向をチェック
-        if x - 1 >= 0 and board[y][x - 1] == opponent_stone:
-            for dx in range(2, x + 1):
-                if board[y][x - dx] == my_stone:
-                    return True
-                elif board[y][x - dx] != opponent_stone:
-                    break
+        # 左方向 (-1, 0)
+        if self._check_direction(board, x, y, -1, 0, my_stone, opponent_stone):
+            return True
 
-        # 上方向をチェック
-        if y - 1 >= 0 and board[y - 1][x] == opponent_stone:
-            for dy in range(2, y + 1):
-                if board[y - dy][x] == my_stone:
-                    return True
-                elif board[y - dy][x] != opponent_stone:
-                    break
+        # 上方向 (0, -1)
+        if self._check_direction(board, x, y, 0, -1, my_stone, opponent_stone):
+            return True
 
         return False
+
+    def _check_direction(
+        self,
+        board: list[list[str]],
+        x: int,
+        y: int,
+        dx: int,
+        dy: int,
+        my_stone: str,
+        opponent_stone: str,
+    ) -> bool:
+        """
+        特定方向に合法手かチェック
+
+        Args:
+            board: ボードの2次元配列
+            x: X座標
+            y: Y座標
+            dx: X方向の増分 (-1=左, 0=変化なし, 1=右)
+            dy: Y方向の増分 (-1=上, 0=変化なし, 1=下)
+            my_stone: 自分の石
+            opponent_stone: 相手の石
+
+        Returns:
+            その方向に合法手がある場合True
+        """
+        height = len(board)
+        width = len(board[0]) if height > 0 else 0
+
+        # 隣接マスが相手の石かチェック
+        next_x = x + dx
+        next_y = y + dy
+
+        if next_x < 0 or next_x >= width or next_y < 0 or next_y >= height:
+            return False
+
+        if board[next_y][next_x] != opponent_stone:
+            return False
+
+        # その先に自分の石があるかチェック
+        step = 2
+        while True:
+            check_x = x + dx * step
+            check_y = y + dy * step
+
+            if check_x < 0 or check_x >= width or check_y < 0 or check_y >= height:
+                return False
+
+            if board[check_y][check_x] == my_stone:
+                return True
+            elif board[check_y][check_x] != opponent_stone:
+                return False
+
+            step += 1
 
     def __str__(self):
         return self.board
