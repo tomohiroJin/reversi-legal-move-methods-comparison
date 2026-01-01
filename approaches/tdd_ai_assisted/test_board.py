@@ -47,10 +47,6 @@ class TestBoardCreation:
         board = Board(board_str, Stone.BLACK)
         assert str(board) == board_str
 
-
-class TestBoardWithTurn:
-    """手番を持つボードのテスト"""
-
     def test_次の手番にBを設定できて確認することができる(self):
         """次の手番にBを設定できて確認することができるテスト"""
         board = Board(".", Stone.BLACK)
@@ -60,6 +56,27 @@ class TestBoardWithTurn:
         """次の手番にWを設定でき確認することができるテスト"""
         board = Board(".", Stone.WHITE)
         assert board.turn == Stone.WHITE
+
+
+class TestBoardLegalMoves:
+    """合法手を含むボード表示のテスト"""
+
+    def test_合法な手が存在しない場合はボードがそのまま出力され最後に手番の石が表示される(
+        self,
+    ):
+        """合法な手が存在しない場合はボードがそのまま出力され最後に手番の石が表示されるテスト"""
+        board_str = (
+            "BBBBBBBB\n"
+            "BBBBBBBB\n"
+            "BBBBBBBB\n"
+            "BBBBBBBB\n"
+            "BBBBBBBB\n"
+            "BBBBBBBB\n"
+            "BBBBBBBB\n"
+            "BBBBBBBB"
+        )
+        board = Board(board_str, Stone.WHITE)
+        assert board.with_legal_moves() == board_str + "\nW"
 
 
 class TestBoardValidation:
