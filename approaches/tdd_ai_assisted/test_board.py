@@ -120,6 +120,12 @@ class TestBoardLegalMoves:
         board = Board(board_str, Stone.BLACK)
         assert board.with_legal_moves() == "B..\n.W.\n..0\nB"
 
+    def test_4x4で左上からBWWが並んでB手番の場合にBWW0が出力される(self):
+        """4x4で左上からBWWが並んでB手番の場合にBWW0が出力されるテスト"""
+        board_str = "B...\n.W..\n..W.\n...."
+        board = Board(board_str, Stone.BLACK)
+        assert board.with_legal_moves() == "B...\n.W..\n..W.\n...0\nB"
+
 
 class TestBoardValidation:
     """ボードバリデーションのテスト"""
