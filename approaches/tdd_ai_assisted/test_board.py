@@ -1,4 +1,4 @@
-from first_step import first_step
+from board import first_step
 
 
 def test_テストが実行できることを確認():
