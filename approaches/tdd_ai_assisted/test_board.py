@@ -4,6 +4,7 @@
 
 # pylint: disable=non-ascii-name,invalid-name
 
+import pytest
 from board import Board
 
 
@@ -34,12 +35,8 @@ def test_改行を含むボードを返却する():
 
 def test_カンマBW改行以外が設定されている場合はエラーが発生する():
     """カンマBW改行以外が設定されている場合はエラーが発生するテスト"""
-    try:
+    with pytest.raises(ValueError, match="ボードには"):
         Board("X")
-    except ValueError:
-        assert True
-    else:
-        assert False
 
 
 def test_8x8のボードにBとWを最初に配置して返却する():

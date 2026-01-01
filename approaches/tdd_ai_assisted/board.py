@@ -1,5 +1,13 @@
+"""
+リバーシのボードを表現するモジュール
+"""
+
+
 class Board:
     """リバーシボードクラス"""
+
+    # ボードで使用可能な文字の定数
+    VALID_CHARS = frozenset({".", "B", "W", "\n"})
 
     def __init__(self, board: str):
         """ボードを初期化する"""
@@ -20,7 +28,7 @@ class Board:
         Raises:
             ValueError: 不正な文字が含まれている場合
         """
-        validated_chars = {".", "B", "W", "\n"}
         for char in board:
-            if char not in validated_chars:
-                raise ValueError("ボードには'.', 'B', 'W', '\\n'のみ使用できます。")
+            if char not in Board.VALID_CHARS:
+                valid_chars_str = ", ".join(repr(c) for c in sorted(Board.VALID_CHARS))
+                raise ValueError(f"ボードには{valid_chars_str}のみ使用できます。")
