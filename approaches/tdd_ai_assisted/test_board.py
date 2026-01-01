@@ -5,7 +5,7 @@
 # pylint: disable=non-ascii-name,invalid-name
 
 import pytest
-from board import Board
+from board import Board, Stone
 
 
 class TestBoardCreation:
@@ -13,23 +13,23 @@ class TestBoardCreation:
 
     def test_1x1のボードを設定すると1x1のボードを返却することができる(self):
         """1x1のボードを設定すると1x1のボードを返却することができるテスト"""
-        board = Board(".", "B")
+        board = Board(".", Stone.BLACK)
         assert str(board) == "."
 
     def test_1x1のボードにBを最初に配置して返却する(self):
         """1x1のボードにBを最初に配置して返却するテスト"""
-        board = Board("B", "B")
+        board = Board("B", Stone.BLACK)
         assert str(board) == "B"
 
     def test_1x1のボードにWを最初に配置して返却する(self):
         """1x1のボードにWを最初に配置して返却するテスト"""
-        board = Board("W", "W")
+        board = Board("W", Stone.WHITE)
         assert str(board) == "W"
 
     def test_改行を含むボードを返却する(self):
         """改行を含むボードを返却するテスト"""
         board_str = "....\n.WB.\n.BW.\n...."
-        board = Board(board_str, "B")
+        board = Board(board_str, Stone.BLACK)
         assert str(board) == board_str
 
     def test_8x8のボードにBとWを最初に配置して返却する(self):
@@ -44,22 +44,22 @@ class TestBoardCreation:
             "........\n"
             "........"
         )
-        board = Board(board_str, "B")
+        board = Board(board_str, Stone.BLACK)
         assert str(board) == board_str
 
 
-class TestBoardWithPlayer:
+class TestBoardWithTurn:
     """手番を持つボードのテスト"""
 
     def test_次の手番にBを設定できて確認することができる(self):
         """次の手番にBを設定できて確認することができるテスト"""
-        board = Board(".", "B")
-        assert board.player == "B"
+        board = Board(".", Stone.BLACK)
+        assert board.turn == Stone.BLACK
 
     def test_次の手番にWを設定でき確認することができる(self):
         """次の手番にWを設定でき確認することができるテスト"""
-        board = Board(".", "W")
-        assert board.player == "W"
+        board = Board(".", Stone.WHITE)
+        assert board.turn == Stone.WHITE
 
 
 class TestBoardValidation:
@@ -68,19 +68,9 @@ class TestBoardValidation:
     def test_空の場合はエラーが発生する(self):
         """空白の場合はエラーが発生するテスト"""
         with pytest.raises(ValueError, match="ボードには"):
-            Board("", "B")
+            Board("", Stone.BLACK)
 
     def test_カンマBW改行以外が設定されている場合はエラーが発生する(self):
         """カンマBW改行以外が設定されている場合はエラーが発生するテスト"""
         with pytest.raises(ValueError, match="ボードには"):
-            Board("X", "B")
-
-    def test_次の手番が空の場合エラーが発生する(self):
-        """次の手番が空の場合エラーが発生するテスト"""
-        with pytest.raises(ValueError, match="手番には"):
-            Board(".", "")
-
-    def test_次の手番がBでもWでもない場合エラーが発生する(self):
-        """次の手番がBでもWでもない場合エラーが発生するテスト"""
-        with pytest.raises(ValueError, match="手番には"):
-            Board(".", "X")
+            Board("X", Stone.BLACK)
