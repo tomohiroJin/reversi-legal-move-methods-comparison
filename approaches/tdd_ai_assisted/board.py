@@ -8,6 +8,8 @@ class Board:
 
     # ボードで使用可能な文字の定数
     VALID_CHARS = frozenset({".", "B", "W", "\n"})
+    # 手番で使用可能な文字の定数
+    VALID_PLAYERS = frozenset({"B", "W"})
 
     def __init__(self, board: str, player: str):
         """ボードを初期化する"""
@@ -49,5 +51,5 @@ class Board:
         Raises:
             ValueError: 不正な文字が含まれている場合
         """
-        if player not in {"B", "W"}:
+        if player not in Board.VALID_PLAYERS:
             raise ValueError("手番には'B'または'W'を指定する必要があります。")
