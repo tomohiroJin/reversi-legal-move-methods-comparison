@@ -126,6 +126,58 @@ class TestBoardLegalMoves:
         board = Board(board_str, Stone.BLACK)
         assert board.with_legal_moves() == "B...\n.W..\n..W.\n...0\nB"
 
+    def test_縦横斜めに合法な手が存在する場合には全ての箇所に0が出力される(self):
+        """縦横斜めに合法な手が存在する場合には全ての箇所に0が出力されるテスト"""
+        board_str = (
+            "BW......\n"
+            "WW......\n"
+            "..W.....\n"
+            "...W....\n"
+            "........\n"
+            "........\n"
+            "........\n"
+            "........"
+        )
+        board = Board(board_str, Stone.BLACK)
+        expected_output = (
+            "BW0.....\n"
+            "WW......\n"
+            "0.W.....\n"
+            "...W....\n"
+            "....0...\n"
+            "........\n"
+            "........\n"
+            "........\n"
+            "B"
+        )
+        assert board.with_legal_moves() == expected_output
+
+    def test_8方向からの合法な手が存在する場合には全ての箇所に0が出力される(self):
+        """8方向からの合法な手が存在する場合には全ての箇所に0が出力されるテスト"""
+        board_str = (
+            "........\n"
+            "........\n"
+            "...BBB..\n"
+            ".BBBWB..\n"
+            "...WBB..\n"
+            "..WB....\n"
+            ".B......\n"
+            "........"
+        )
+        board = Board(board_str, Stone.WHITE)
+        expected_output = (
+            "........\n"
+            "..000.0.\n"
+            ".0.BBB..\n"
+            "0BBBWB0.\n"
+            "...WBB0.\n"
+            "..WB0.0.\n"
+            ".B.0....\n"
+            "0.......\n"
+            "W"
+        )
+        assert board.with_legal_moves() == expected_output
+
 
 class TestBoardValidation:
     """ボードバリデーションのテスト"""
