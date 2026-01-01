@@ -84,6 +84,14 @@ class Board:
                 elif board[y][x - dx] != opponent_stone:
                     break
 
+        # 上方向をチェック
+        if y - 1 >= 0 and board[y - 1][x] == opponent_stone:
+            for dy in range(2, y + 1):
+                if board[y - dy][x] == my_stone:
+                    return True
+                elif board[y - dy][x] != opponent_stone:
+                    break
+
         return False
 
     def __str__(self):
