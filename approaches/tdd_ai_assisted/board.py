@@ -27,7 +27,8 @@ class Board:
 
     def with_legal_moves(self) -> str:
         """合法手を含むボード表示を返す"""
-        return f"{self.board}\n{self.turn.value}"
+        legal_moves_board = self.board.replace(".", "0")
+        return f"{legal_moves_board}\n{self.turn.value}"
 
     def __str__(self):
         return self.board
