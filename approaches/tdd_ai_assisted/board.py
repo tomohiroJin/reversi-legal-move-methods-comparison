@@ -28,6 +28,8 @@ class Board:
         Raises:
             ValueError: 不正な文字が含まれている場合
         """
+        if not board:
+            raise ValueError("ボードには少なくとも1文字必要です。")
         for char in board:
             if char not in Board.VALID_CHARS:
                 valid_chars_str = ", ".join(repr(c) for c in sorted(Board.VALID_CHARS))

@@ -51,6 +51,11 @@ class TestBoardCreation:
 class TestBoardValidation:
     """ボードバリデーションのテスト"""
 
+    def test_空の場合はエラーが発生する(self):
+        """空白の場合はエラーが発生するテスト"""
+        with pytest.raises(ValueError, match="ボードには"):
+            Board("")
+
     def test_カンマBW改行以外が設定されている場合はエラーが発生する(self):
         """カンマBW改行以外が設定されている場合はエラーが発生するテスト"""
         with pytest.raises(ValueError, match="ボードには"):
