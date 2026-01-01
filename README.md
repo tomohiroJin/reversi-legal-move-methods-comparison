@@ -16,12 +16,11 @@
 各アプローチは、上記の共通条件と `problem/problem_statement.md` をあわせて読んでください。
 
 ## 現在の状況
-- 完了: plan_driven / spec_driven / vibe_coding
-- 未着手: tdd_ai_assisted
+- 完了: plan_driven / spec_driven / tdd_ai_assisted / vibe_coding
 
 ## ドキュメント
 - 各アプローチの結果: `docs/reports/`
-- 比較レポート: `docs/comparisons/`
+- 比較レポート: `docs/comparisons/`（`overall_analysis.md`）
 - plan_driven の詳細: `docs/approaches/plan_driven.md`
 
 ## ディレクトリ構成
